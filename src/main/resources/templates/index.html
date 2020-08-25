@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <title>Student Directory</title>
+        <style>
+            h2{
+                text-align: center;
+                padding-top: 20px;
+                padding-bottom: 20px;
+                }
+
+            table{
+                width: 50%;
+                }
+
+            table td,table th{
+                border: 1px solid grey;
+                }
+
+            table th {
+                background: #eef;
+                text-align: center;
+                }
+
+            .pagination-div{
+                user-select: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                }
+
+            .pagination-div span{
+                border-radius:3px;
+                border:1px solid #999;
+                padding:10px;
+                margin:0px 5px 0px 5px;
+                display:inline-block;
+                }
+
+            .centered{
+                margin-left: auto;
+                margin-right: auto;
+                }
+
+            span.selected{
+                background:#ccf;
+                }
+        </style>
+    </head>
+
+    <body>
+        <h2>Students Directory</h2>
+
+        <p>[[${msg}]]</p>
+        <div class="container">
+            <table class="table centered">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Major</th>
+                    <th>GPA</th>
+                    <th>action</th>
+                </tr>
+                <tr th:each="data : ${page.content}">
+                    <td th:text="${data.studentId}" style="text-align: center;"></td>
+                    <td th:text="${data.name}"></td>
+                    <td th:text="${data.major}"></td>
+                    <td th:text="${data.gpa}" style="text-align: center;"></td>
+                    <td style="text-align: center;"><a th:href="@{/update-data/(id=${data.id})}">Update</a></td>
+                    <!--<td style="text-align: center;"><a th:href="@{/deleted/(id=${data.id})}">Remove</a></td>-->
+                </tr>
+            </table>
+        </div>
+
+        <p style="text-align: center; margin: 25px;">
+            Showing [[${(page.number+1)*page.size-5}]] to [[${(page.number+1)*page.size}]] of [[${(page.totalPages*page.size)}]] Entries
+        </p>
+
+        <div class="pagination-div">
+            <span th:if="${page.hasPrevious()}">
+                <a th:href="@{/(page=${page.number-1},size=${page.size})}">Previous</a>
+            </span>
+            <th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+                <span th:if="${page.number == i}" class="selected">[[${i}+1]]</span>
+                <span th:unless="${page.number == i}">
+                    <a th:href="@{/(page=${i},size=${page.size})}">[[${i}+1]]</a>
+                </span>
+            </th:block>
+            <span th:if="${page.hasNext()}">
+                <a th:href="@{/(page=${page.number+1},size=${page.size})}">Next</a>
+            </span>
+        </div>
+    </body>
+</html>

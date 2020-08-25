@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <title>Student Directory</title>
+
+        <style>
+            h2{
+                text-align: center;
+                padding-top: 25px;
+                padding-bottom: 25px;
+                }
+            .centered{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                }
+        </style>
+    </head>
+    <body>
+
+    <div class="container centered">
+        <div class="col-md-6">
+            <h2>Students Directory</h2>
+            <h4 style="margin-bottom: 15px;">Data changes</h4>
+                <form action="#" th:action="@{/saved/{id}(id=${data.id})}" th:object="${data}" method="POST">
+                    <table class="table">
+                        <tr>
+                            <td style="vertical-align: middle;">Student ID</td>
+                            <td><input type="number" th:field="*{studentId}" class="form-control"/></td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle;">Name</td>
+                            <td><input type="text" th:field="*{name}" class="form-control"/></td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle;">Major</td>
+                            <td><input type="text" th:field="*{major}" class="form-control"/></td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle;">GPA</td>
+                            <td><input type="number" step="0.01" th:field="*{gpa}" class="form-control"/></td>
+                        </tr>
+
+                    </table>
+                    <input type="submit" value="Update User" style="margin-top: 10px; float: right;">
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
